@@ -1,5 +1,5 @@
 {
-    "name": "token-manager",
+    "name": "token-manager-express",
     "version": "1.0.0",
     "description": "A simple in-memory token manager for Node.js",
     "main": "index.js",

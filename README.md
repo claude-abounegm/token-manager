@@ -1,5 +1,9 @@
-# token-manager
-A simple in-memory token manager for Node.js
+# Token Manager
+A simple in-memory token manager for Express. You can store data in the token.
+
+
+# Install
+`npm i token-manager-express`
 
 # TokenManager
 ```js
