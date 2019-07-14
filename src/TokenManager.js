@@ -31,30 +31,16 @@ class TokenManager {
     }
 
     static generate(opts) {
-        let { expireAfterSeconds } = _.isPlainObject(opts) ? opts : {};
-
-        if (!_.isNumber(expireAfterSeconds) && expireAfterSeconds !== false) {
-            expireAfterSeconds = 3 * 60 * 60;
-        }
-
         const token = new Token(opts);
+
         _tokens[token.secret] = token;
-
-        if (expireAfterSeconds !== false) {
-            // expire
-            token._timeout = setTimeout(
-                () => TokenManager.invalidate(token),
-                expireAfterSeconds * 1000
-            ).unref();
-        }
-
         return token;
     }
 
     static get(secret) {
         const token = _tokens[secret];
         if (token && !token.valid) {
-            TokenManager.invalidate(token);
+            this.invalidate(token);
             return;
         }
 
@@ -63,17 +49,12 @@ class TokenManager {
 
     static invalidate(token) {
         if (_.isString(token)) {
-            token = TokenManager.get(token);
+            token = this.get(token);
         }
 
         if (token instanceof Token) {
             delete _tokens[token.secret];
             token.invalidate();
-
-            if (token._timeout) {
-                clearTimeout(token._timeout);
-            }
-
             return true;
         }
 
@@ -84,15 +65,15 @@ class TokenManager {
         return !_.isUndefined(_tokens[secret]);
     }
 
-    static ensureValidToken(onError) {
-        if (onError && !_.isFunction(onError)) {
-            throw new Error('onError needs to be a function');
+    static ensureValidToken(onInvalidToken) {
+        if (onInvalidToken && !_.isFunction(onInvalidToken)) {
+            throw new Error('onInvalidToken needs to be a function');
         }
 
         return (req, res, next) => {
             if (!req.token) {
-                if (onError) {
-                    return onError(req, res, next);
+                if (onInvalidToken) {
+                    return onInvalidToken(req, res, next);
                 }
 
                 return res.end();
@@ -104,6 +85,6 @@ class TokenManager {
 }
 
 TokenManager.Token = Token;
-Token.TokenManagerTag = TokenManagerTag;
+TokenManager.TokenManagerTag = TokenManagerTag;
 
 module.exports = TokenManager;

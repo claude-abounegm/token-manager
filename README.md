@@ -31,7 +31,7 @@ app.use('/data',
         console.log(req.body) // 'this data should only be visible to bearer'
 
         // if it's a one time use token:
-        TokenManager.invalidate(token);
+        token.invalidate();
     }
 );
 ```
