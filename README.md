@@ -14,7 +14,8 @@ const TokenManager = require('token-manager-express');
 
 app.use(TokenManager.init());
 
-app.post('/data', 
+// will accept and parse any type of request (ex. GET, POST, PUT, ...etc)
+app.use('/data', 
     TokenManager.ensureValidToken(
         // optional. if not specified, TokenManager just
         // ends the connection using `res.end()`
@@ -107,3 +108,6 @@ readonly valid: boolean;
 
 invalidate(): void;
 ```
+
+# Credits
+Made with ❤ at [Income Store](http://incomestore.com) in _Lancaster, PA_.

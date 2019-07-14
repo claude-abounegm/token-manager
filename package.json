@@ -1,6 +1,6 @@
 {
     "name": "token-manager-express",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "A simple in-memory token manager for Express",
     "main": "index.js",
     "scripts": {
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/claude-abounegm/token-manager.git"
+        "url": "git+https://github.com/claude-abounegm/token-manager-express.git"
     },
     "keywords": [
         "token",
@@ -21,9 +21,9 @@
     "author": "Claude Abounegm (cabounegm@incomestore.com)",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/claude-abounegm/token-manager/issues"
+        "url": "https://github.com/claude-abounegm/token-manager-express/issues"
     },
-    "homepage": "https://github.com/claude-abounegm/token-manager#readme",
+    "homepage": "https://github.com/claude-abounegm/token-manager-express#readme",
     "dependencies": {
         "lodash": "^4.17.14"
     },
