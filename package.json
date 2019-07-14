@@ -1,0 +1,41 @@
+{
+    "name": "token-manager",
+    "version": "1.0.0",
+    "description": "A simple in-memory token manager for Node.js",
+    "main": "TokenManager.js",
+    "scripts": {
+        "test": "nyc --reporter=html --reporter=text mocha ./test/spec/**/*.js",
+        "coverage": "nyc report --reporter=text-lcov | coveralls"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/claude-abounegm/token-manager.git"
+    },
+    "keywords": [
+        "token",
+        "token-manager",
+        "nodejs",
+        "javascript",
+        "mocha"
+    ],
+    "author": "Claude Abounegm (cabounegm@incomestore.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/claude-abounegm/token-manager/issues"
+    },
+    "homepage": "https://github.com/claude-abounegm/token-manager#readme",
+    "dependencies": {
+        "lodash": "^4.17.14"
+    },
+    "devDependencies": {
+        "express": "^4.17.1",
+        "eslint": "^6.0.0",
+        "prettier": "^1.18.2",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-config-prettier": "^5.0.0",
+        "nodemon": "^1.19.1",
+        "chai": "^4.2.0",
+        "mocha": "^6.1.4",
+        "nyc": "^14.1.1"
+    }
+}
