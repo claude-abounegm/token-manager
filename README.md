@@ -81,19 +81,19 @@ request('/data', {
 
 # TokenManager
 ```js
-static init(): express.Handler;
+init(): express.Handler;
 
 /**
  * Ensures that the current request has a valid token.
  */
-static ensureValidToken(onError?: express.Handler): express.Handler;
+ensureValidToken(onInvalidToken?: express.Handler): express.Handler;
 
-static generate<T extends {}>(opts: ManagerOpts<T>): Token<T>;
-static invalidate<T>(token: Token<T> | string): boolean;
-static get<T extends {}>(secret: string): Token<T> | null;
-static exists(secret: string): boolean;
+generate<T extends {}>(opts: TokenOpts<T>): Token<T>;
+invalidate<T>(token: Token<T> | string): boolean;
+get<T extends {}>(secret: string): Token<T> | null;
+exists(secret: string): boolean;
 
-readonly Token: Token;
+readonly Token: typeof Token;
 readonly TokenManagerTag: Symbol;
 ```
 
@@ -105,6 +105,7 @@ readonly data: T;
 readonly secret: string;
 readonly secretUri: string;
 readonly valid: boolean;
+readonly expires: boolean;
 
 invalidate(): void;
 ```

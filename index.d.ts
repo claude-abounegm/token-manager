@@ -12,7 +12,7 @@ declare namespace token_manager {
         expireAfterSeconds?: number | false;
     }
 
-    class Token<T> {
+    class Token<T extends {} = {}> {
         constructor(opts: TokenOpts<T>);
 
         readonly data: T;
