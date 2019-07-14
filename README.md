@@ -5,6 +5,67 @@ A simple in-memory token manager for Express. You can store data in the token.
 # Install
 `npm i token-manager-express`
 
+# Usage
+
+## Setup Express with TokenManager
+```js
+const express = require('express');
+const TokenManager = require('token-manager-express');
+
+app.use(TokenManager.init());
+
+app.post('/data', 
+    TokenManager.ensureValidToken(
+        // optional. if not specified, TokenManager just
+        // ends the connection using `res.end()`
+        (req, res, next) => res.send('invalid token')
+    ),
+    (req, res, next) => {
+        // we can only get here if the token
+        // is valid. TokenManager creates a token
+        // field in req.
+        const { token } = req;
+
+        console.log(token.data.anotherField); // `${secret}[moreData]`
+        console.log(req.body) // 'this data should only be visible to bearer'
+
+        // if it's a one time use token:
+        TokenManager.invalidate(token);
+    }
+);
+```
+
+## Generate token:
+```js
+TokenManager.generate({
+    // default is 3hrs. set to false
+    // for no expiration
+    expireAfterSeconds: false,
+
+    // default is 64
+    size: 64,
+
+    // for convenience if you pass a function,
+    // it will give you the generated secret
+    data: ({ secret }) => ({
+        anotherField: `${secret}[moreData]`
+    });
+})
+```
+
+## Send data with Token
+```js
+// give the secret token to another client
+request('/data', {
+    auth: {
+        bearer: secret
+    },
+    method: 'POST',
+    body: 'this data should only be visible to bearer',
+    json: true
+});
+```
+
 # TokenManager
 ```js
 static init(): express.Handler;

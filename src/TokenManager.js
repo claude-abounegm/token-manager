@@ -17,7 +17,7 @@ class TokenManager {
             let secret;
 
             try {
-                secret = /^Bearer Elo-(.+)$/.exec(req.headers.authorization)[1];
+                secret = /^Bearer (.+)$/.exec(req.headers.authorization)[1];
             } catch (e) {}
 
             if (!secret) {
@@ -55,7 +55,7 @@ class TokenManager {
         const token = _tokens[secret];
         if (token && !token.valid) {
             TokenManager.invalidate(token);
-            return null;
+            return;
         }
 
         return token;

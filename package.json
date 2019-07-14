@@ -1,7 +1,7 @@
 {
     "name": "token-manager-express",
-    "version": "1.0.1",
-    "description": "A simple in-memory token manager for Node.js",
+    "version": "1.0.2",
+    "description": "A simple in-memory token manager for Express",
     "main": "index.js",
     "scripts": {
         "test": "nyc --reporter=html --reporter=text mocha ./test/spec/**/*.js",
