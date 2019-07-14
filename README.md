@@ -37,7 +37,7 @@ app.post('/data',
 
 ## Generate token:
 ```js
-TokenManager.generate({
+const token = TokenManager.generate({
     // default is 3hrs. set to false
     // for no expiration
     expireAfterSeconds: false,
@@ -49,16 +49,28 @@ TokenManager.generate({
     // it will give you the generated secret
     data: ({ secret }) => ({
         anotherField: `${secret}[moreData]`
-    });
-})
+    }),
+
+    // this is also valid:
+    data: {
+        anotherField: 'someData'
+    }
+});
+
+console.log(token.secret); // the secret
 ```
 
 ## Send data with Token
 ```js
-// give the secret token to another client
+// You can now use the token to access the /data route
+
+// For GET requests:
+request(`/data?token=${token.secret}`);
+
+// For other type of requests:
 request('/data', {
     auth: {
-        bearer: secret
+        bearer: token.secret
     },
     method: 'POST',
     body: 'this data should only be visible to bearer',
