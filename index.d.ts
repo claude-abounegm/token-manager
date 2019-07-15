@@ -1,6 +1,22 @@
 import express = require('express');
 
-declare namespace token_manager {
+declare class TokenManager {
+    static init(): express.Handler;
+
+    /**
+     * Ensures that the current request has a valid token.
+     */
+    static ensureValidToken(onInvalidToken?: express.Handler): express.Handler;
+
+    static generate<T extends {}>(opts: TokenManager.TokenOpts<T>): TokenManager.Token<T>;
+    static invalidate<T>(token: TokenManager.Token<T> | string): boolean;
+    static get<T extends {}>(secret: string): TokenManager.Token<T> | null;
+    static exists(secret: string): boolean;
+
+    static readonly TokenManagerTag: Symbol;
+}
+
+declare namespace TokenManager {
     interface TokenOpts<T> {
         data?: T | ((opts: { secret: string }) => T);
         secret?: string;
@@ -23,32 +39,14 @@ declare namespace token_manager {
 
         invalidate(): void;
     }
-
-    interface Manager {
-        init(): express.Handler;
-
-        /**
-         * Ensures that the current request has a valid token.
-         */
-        ensureValidToken(onInvalidToken?: express.Handler): express.Handler;
-
-        generate<T extends {}>(opts: TokenOpts<T>): Token<T>;
-        invalidate<T>(token: Token<T> | string): boolean;
-        get<T extends {}>(secret: string): Token<T> | null;
-        exists(secret: string): boolean;
-
-        readonly Token: typeof Token;
-        readonly TokenManagerTag: Symbol;
-    }
 }
 
 declare global {
     namespace Express {
         interface Request {
-            token?: token_manager.Token<{}>;
+            token?: TokenManager.Token<{}>;
         }
     }
 }
 
-declare const TokenManager: token_manager.Manager;
 export = TokenManager;
