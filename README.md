@@ -117,8 +117,3 @@ readonly expires: boolean;
 
 invalidate(): void;
 ```
-
----
-
-# Credits
-Made with ❤ at [Income Store](http://incomestore.com) in _Lancaster, PA_.
